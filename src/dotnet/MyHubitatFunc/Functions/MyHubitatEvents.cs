@@ -44,7 +44,11 @@ namespace MyHubitatFunc.Functions
             {
                 var commandUrl = await _hubitatController.SendCommand(hubitatEvent.Content.DeviceId, "on");
 
-                _log.LogInformation($"Traphouse switch turned back on after event. command: {commandUrl}", hubitatEvent);
+                _log.LogInformation($"Device: '{hubitatEvent.Content.DeviceId}' turned back 'on' after 'off' event.", new
+                {
+                    hubitatEvent,
+                    commandUrl
+                });
             }
 
             return new OkObjectResult("Success");
@@ -54,12 +58,13 @@ namespace MyHubitatFunc.Functions
         {
             var latitude = _environmentProvider.GetEnvironmentVariable("HUBITAT_LATITUDE", EnvironmentVariableTarget.Process);
             var longitude = _environmentProvider.GetEnvironmentVariable("HUBITAT_LONGITUDE", EnvironmentVariableTarget.Process);
+
             var sunriseSunsetInfo = await _sunriseSunsetInfoConductor.GetSunriseSunsetInfoAsync(latitude, longitude);
 
-            _log.LogInformation($"SunriseSunsetInfo - sunrise: {sunriseSunsetInfo.Results.Sunrise}, sunset: {sunriseSunsetInfo.Results.Sunset}, now: {DateTimeOffset.UtcNow}");
+            var sunrise = sunriseSunsetInfo.Results.Sunrise.AddMinutes(-15);
+            var sunset = sunriseSunsetInfo.Results.Sunset.AddMinutes(15);
 
-            return sunriseSunsetInfo.Results.Sunrise > DateTimeOffset.UtcNow ||
-                sunriseSunsetInfo.Results.Sunset < DateTimeOffset.UtcNow;
+            return sunrise > DateTimeOffset.UtcNow || sunset < DateTimeOffset.UtcNow;
         }
     }
 }
