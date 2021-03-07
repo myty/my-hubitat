@@ -1,0 +1,9 @@
+{
+  "name": "my-hubitat",
+  "version": "0.1.0",
+  "author": "Michael Tyson <michaeltyson@outlook.com>",
+  "license": "MIT",
+  "scripts": {
+    "dotnet": "cd src\\dotnet\\MyHubitatFunc\\ && func start --build"
+  }
+}
