@@ -13,7 +13,8 @@ on:
 env:
   AZURE_FUNCTIONAPP_NAME: myty-hubitat
   AZURE_FUNCTIONAPP_PACKAGE_PATH: "src/dotnet/MyHubitatFunc"
-  DOTNET_VERSION: "3.1.406"
+  DOTNET_3_1_VERSION: "3.1.x"
+  DOTNET_5_0_VERSION: "5.0.x"
 
 jobs:
   build-and-deploy:
@@ -22,10 +23,15 @@ jobs:
       - name: "Checkout GitHub Action"
         uses: actions/checkout@v2
 
-      - name: Setup DotNet ${{ env.DOTNET_VERSION }} Environment
+      - name: Setup DotNet ${{ env.DOTNET_3_1_VERSION }} Environment
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: ${{ env.DOTNET_VERSION }}
+          dotnet-version: ${{ env.DOTNET_3_1_VERSION }}
+
+      - name: Setup DotNet ${{ env.DOTNET_5_0_VERSION }} Environment
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: ${{ env.DOTNET_5_0_VERSION }}
 
       - name: "Resolve Project Dependencies Using Dotnet"
         shell: pwsh
@@ -33,6 +39,7 @@ jobs:
           pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
           dotnet build --configuration Release --output ./output
           popd
+
       - name: "Run Azure Functions Action"
         uses: Azure/functions-action@v1
         id: fa
