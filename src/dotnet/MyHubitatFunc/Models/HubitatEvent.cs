@@ -1,7 +1,6 @@
 namespace MyHubitatFunc.Models
 {
     using System;
-    using System.Collections.Generic;
     using System.Globalization;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
@@ -52,7 +51,7 @@ namespace MyHubitatFunc.Models
 
     internal static class Converter
     {
-        public static readonly JsonSerializerSettings Settings = new JsonSerializerSettings
+        public static readonly JsonSerializerSettings Settings = new()
         {
             MetadataPropertyHandling = MetadataPropertyHandling.Ignore,
             DateParseHandling = DateParseHandling.None,
@@ -89,6 +88,6 @@ namespace MyHubitatFunc.Models
             return;
         }
 
-        public static readonly ParseStringConverter Singleton = new ParseStringConverter();
+        public static readonly ParseStringConverter Singleton = new();
     }
 }
