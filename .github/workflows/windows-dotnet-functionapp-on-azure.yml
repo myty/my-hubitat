@@ -6,9 +6,6 @@ on:
     paths:
       - "src/dotnet/MyHubitatFunc/**/*.*"
   pull_request:
-    branches: [main]
-    paths:
-      - "src/dotnet/MyHubitatFunc/**/*.*"
 
 env:
   AZURE_FUNCTIONAPP_NAME: myty-hubitat
