@@ -3,13 +3,13 @@ using System.Threading.Tasks;
 using MyHubitatFunc.Interfaces.Conductors;
 using MyHubitatFunc.Models;
 
-namespace MyHubitatFunc.Conductors
+namespace MyHubitatFunc.Providers
 {
-    public class SunriseSunsetInfoConductor : ISunriseSunsetInfoConductor
+    public class SunriseSunsetInfoProvider : ISunriseSunsetInfoProvider
     {
         private readonly HttpClient _httpClient;
 
-        public SunriseSunsetInfoConductor(HttpClient httpClient)
+        public SunriseSunsetInfoProvider(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }

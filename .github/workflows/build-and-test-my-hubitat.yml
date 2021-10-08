@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - "tests/dotnet/MyHubitatFunc.Tests/**/*.*"
+      - "tests/dotnet/**/*.*"
 
 env:
   DOTNET_3_1_VERSION: "3.1.x"
