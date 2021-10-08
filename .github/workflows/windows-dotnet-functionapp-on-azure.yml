@@ -2,11 +2,8 @@ name: Deploy My Hubitat to Azure Functios
 
 on:
   push:
-    branches: [main]
-    paths:
-      - "src/dotnet/MyHubitatFunc/**/*.*"
-  pull_request:
-    branches: [main]
+    branches:
+      - main
     paths:
       - "src/dotnet/MyHubitatFunc/**/*.*"
 

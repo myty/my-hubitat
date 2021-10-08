@@ -1,0 +1,56 @@
+name: Build and Test My Hubitat
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "tests/dotnet/MyHubitatFunc.Tests/**/*.*"
+
+env:
+  DOTNET_3_1_VERSION: "3.1.x"
+  DOTNET_5_0_VERSION: "5.0.x"
+  TEST_PROJECT_PATH: "tests/dotnet/MyHubitatFunc.Tests"
+
+jobs:
+  build-and-test:
+    name: build-and-test-${{matrix.os}}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+
+    steps:
+      - name: "Checkout GitHub Action"
+        uses: actions/checkout@v2
+
+      - name: Setup DotNet ${{ env.DOTNET_3_1_VERSION }} Environment
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: ${{ env.DOTNET_3_1_VERSION }}
+
+      - name: Setup DotNet ${{ env.DOTNET_5_0_VERSION }} Environment
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: ${{ env.DOTNET_5_0_VERSION }}
+
+      - name: Install dependencies
+        shell: pwsh
+        run: |
+          pushd './${{ env.TEST_PROJECT_PATH }}'
+          dotnet restore
+          popd
+
+      - name: Build
+        shell: pwsh
+        run: |
+          pushd './${{ env.TEST_PROJECT_PATH }}'
+          dotnet build --configuration Release --no-restore
+          popd
+
+      - name: Test
+        shell: pwsh
+        run: |
+          pushd './${{ env.TEST_PROJECT_PATH }}'
+          dotnet test --no-restore --verbosity normal
+          popd
