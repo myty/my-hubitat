@@ -5,11 +5,11 @@ on:
   pull_request:
     branches: [main]
     paths:
-      - "**.cs"
-      - "**.csproj"
+      - "tests/dotnet/MyHubitatFunc.Tests/**/*.*"
 
 env:
   DOTNET_VERSION: "5.0.x"
+  TEST_PROJECT_PATH: "tests/dotnet/MyHubitatFunc.Tests"
 
 jobs:
   build-and-test:
@@ -27,10 +27,22 @@ jobs:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
       - name: Install dependencies
-        run: dotnet restore
+        shell: pwsh
+        run: |
+          pushd './${{ env.TEST_PROJECT_PATH }}'
+          dotnet restore
+          popd
 
       - name: Build
-        run: dotnet build --configuration Release --no-restore
+        shell: pwsh
+        run: |
+          pushd './${{ env.TEST_PROJECT_PATH }}'
+          dotnet build --configuration Release --no-restore
+          popd
 
       - name: Test
-        run: dotnet test --no-restore --verbosity normal
+        shell: pwsh
+        run: |
+          pushd './${{ env.TEST_PROJECT_PATH }}'
+          dotnet test --no-restore --verbosity normal
+          popd
