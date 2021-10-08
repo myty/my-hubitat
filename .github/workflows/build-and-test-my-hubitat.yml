@@ -8,7 +8,8 @@ on:
       - "tests/dotnet/MyHubitatFunc.Tests/**/*.*"
 
 env:
-  DOTNET_VERSION: "5.0.x"
+  DOTNET_3_1_VERSION: "3.1.x"
+  DOTNET_5_0_VERSION: "5.0.x"
   TEST_PROJECT_PATH: "tests/dotnet/MyHubitatFunc.Tests"
 
 jobs:
@@ -20,11 +21,18 @@ jobs:
         os: [ubuntu-latest, windows-latest, macOS-latest]
 
     steps:
-      - uses: actions/checkout@v2
-      - name: Setup .NET Core
+      - name: "Checkout GitHub Action"
+        uses: actions/checkout@v2
+
+      - name: Setup DotNet ${{ env.DOTNET_3_1_VERSION }} Environment
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: ${{ env.DOTNET_VERSION }}
+          dotnet-version: ${{ env.DOTNET_3_1_VERSION }}
+
+      - name: Setup DotNet ${{ env.DOTNET_5_0_VERSION }} Environment
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: ${{ env.DOTNET_5_0_VERSION }}
 
       - name: Install dependencies
         shell: pwsh
