@@ -1,9 +1,9 @@
 name: Build and Test My Hubitat
 
 on:
-  push:
   pull_request:
-    branches: [main]
+    branches:
+      - main
     paths:
       - "tests/dotnet/MyHubitatFunc.Tests/**/*.*"
 
