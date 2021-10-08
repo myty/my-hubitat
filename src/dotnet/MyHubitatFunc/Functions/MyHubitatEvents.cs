@@ -15,7 +15,7 @@ namespace MyHubitatFunc.Functions
     public class MyHubitatEvents
     {
         private readonly IEnvironmentProvider _environmentProvider;
-        private readonly ISunriseSunsetInfoConductor _sunriseSunsetInfoConductor;
+        private readonly ISunriseSunsetInfoProvider _sunriseSunsetInfoProvider;
         private readonly IHubitatController _hubitatController;
         private readonly ILogger<MyHubitatEvents> _log;
 
@@ -23,12 +23,12 @@ namespace MyHubitatFunc.Functions
             IEnvironmentProvider environmentProvider,
             IHubitatController hubitatController,
             ILogger<MyHubitatEvents> log,
-            ISunriseSunsetInfoConductor sunriseSunsetInfoConductor)
+            ISunriseSunsetInfoProvider sunriseSunsetInfoProvider)
         {
             _hubitatController = hubitatController;
             _log = log;
             _environmentProvider = environmentProvider;
-            _sunriseSunsetInfoConductor = sunriseSunsetInfoConductor;
+            _sunriseSunsetInfoProvider = sunriseSunsetInfoProvider;
         }
 
         [Function("my-hubitat-events")]
@@ -61,7 +61,7 @@ namespace MyHubitatFunc.Functions
             var latitude = _environmentProvider.GetEnvironmentVariable("HUBITAT_LATITUDE", EnvironmentVariableTarget.Process);
             var longitude = _environmentProvider.GetEnvironmentVariable("HUBITAT_LONGITUDE", EnvironmentVariableTarget.Process);
 
-            var sunriseSunsetInfo = await _sunriseSunsetInfoConductor.GetSunriseSunsetInfoAsync(latitude, longitude);
+            var sunriseSunsetInfo = await _sunriseSunsetInfoProvider.GetSunriseSunsetInfoAsync(latitude, longitude);
 
             var sunrise = sunriseSunsetInfo.Results.Sunrise.AddMinutes(-15);
             var sunset = sunriseSunsetInfo.Results.Sunset.AddMinutes(15);

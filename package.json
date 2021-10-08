@@ -1,9 +1,11 @@
 {
   "name": "my-hubitat",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "Michael Tyson <michaeltyson@outlook.com>",
   "license": "MIT",
   "scripts": {
-    "dotnet": "cd src\\dotnet\\MyHubitatFunc\\ && func start --build"
+    "dotnet": "cd src\\dotnet\\MyHubitatFunc\\ && func start --build",
+    "dotnet-test": "cd tests\\dotnet\\MyHubitatFunc.Tests\\ && dotnet test",
+    "dotnet-test:watch": "cd tests\\dotnet\\MyHubitatFunc.Tests\\ && dotnet watch test"
   }
 }

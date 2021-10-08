@@ -3,7 +3,7 @@ using MyHubitatFunc.Models;
 
 namespace MyHubitatFunc.Interfaces.Conductors
 {
-    public interface ISunriseSunsetInfoConductor
+    public interface ISunriseSunsetInfoProvider
     {
         Task<SunriseSunsetInfo> GetSunriseSunsetInfoAsync(string latitude, string longitude, string date = "today", bool formatted = false);
     }

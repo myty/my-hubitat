@@ -1,12 +1,11 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Net.Http;
-using MyHubitatFunc.Conductors;
+using MyHubitatFunc.Providers;
 using MyHubitatFunc.Controllers;
 using MyHubitatFunc.Interfaces.Conductors;
 using MyHubitatFunc.Interfaces.Controllers;
 using MyHubitatFunc.Interfaces.Providers;
-using MyHubitatFunc.Providers;
 
 namespace MyHubitatFunc
 {
@@ -20,7 +19,7 @@ namespace MyHubitatFunc
                 {
                     services.AddHttpClient();
                     services.AddSingleton<IEnvironmentProvider, EnvironmentProvider>();
-                    services.AddSingleton<ISunriseSunsetInfoConductor, SunriseSunsetInfoConductor>();
+                    services.AddSingleton<ISunriseSunsetInfoProvider, SunriseSunsetInfoProvider>();
                     services.AddSingleton<IHubitatController>(sp =>
                     {
                         var environmentProvider = sp.GetService<IEnvironmentProvider>();
